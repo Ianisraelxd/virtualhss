@@ -1,4 +1,4 @@
-/*! For license information please see main.e51b5644.js.LICENSE.txt */
+/*! For license information please see main.1c24da0d.js.LICENSE.txt */
 (() => {
   "use strict";
   var e = {
@@ -9266,7 +9266,7 @@
         Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
         Object.defineProperty(e, "__esModule", { value: !0 });
     }),
-    (n.p = ""),
+    (n.p = "./"),
     (() => {
       var e = { 792: 0 };
       n.f.j = (t, r) => {
@@ -10338,31 +10338,52 @@
             (void 0 === (l = { window: o, v5Compat: !0 }) && (l = {}),
             m(
               function (e, t) {
-                let { pathname: n, search: r, hash: a } = e.location;
-                return h(
-                  "",
-                  { pathname: n, search: r, hash: a },
-                  (t.state && t.state.usr) || null,
-                  (t.state && t.state.key) || "default"
+                let {
+                  pathname: n = "/",
+                  search: r = "",
+                  hash: a = "",
+                } = p(e.location.hash.substr(1));
+                return (
+                  n.startsWith("/") || n.startsWith(".") || (n = "/" + n),
+                  h(
+                    "",
+                    { pathname: n, search: r, hash: a },
+                    (t.state && t.state.usr) || null,
+                    (t.state && t.state.key) || "default"
+                  )
                 );
               },
               function (e, t) {
-                return "string" === typeof t ? t : f(t);
+                let n = e.document.querySelector("base"),
+                  r = "";
+                if (n && n.getAttribute("href")) {
+                  let t = e.location.href,
+                    n = t.indexOf("#");
+                  r = -1 === n ? t : t.slice(0, n);
+                }
+                return r + "#" + ("string" === typeof t ? t : f(t));
               },
-              null,
+              function (e, t) {
+                c(
+                  "/" === e.pathname.charAt(0),
+                  "relative pathnames are not supported in hash history.push(" +
+                    JSON.stringify(t) +
+                    ")"
+                );
+              },
               l
             )));
         let s = i.current,
-          [u, c] = t.useState({ action: s.action, location: s.location }),
-          { v7_startTransition: d } = a || {},
-          p = t.useCallback(
+          [u, d] = t.useState({ action: s.action, location: s.location }),
+          { v7_startTransition: g } = a || {},
+          y = t.useCallback(
             (e) => {
-              d && we ? we(() => c(e)) : c(e);
+              g && we ? we(() => d(e)) : d(e);
             },
-            [c, d]
+            [d, g]
           );
         return (
-          t.useLayoutEffect(() => s.listen(p), [s, p]),
+          t.useLayoutEffect(() => s.listen(y), [s, y]),
           t.createElement(pe, {
             basename: n,
             children: r,
@@ -13244,4 +13265,4 @@
         ct();
     })();
 })();
-//# sourceMappingURL=main.e51b5644.js.map
+//# sourceMappingURL=main.1c24da0d.js.map
